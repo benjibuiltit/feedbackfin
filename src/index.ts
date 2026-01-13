@@ -11,11 +11,13 @@ export type FeedbackFinConfig = {
   url: string;
   user: Record<any, any>;
   disableErrorAlert: boolean;
+  theme: "auto" | "light" | "dark";
 };
 const defaultConfig: FeedbackFinConfig = {
   url: "",
   user: {},
   disableErrorAlert: false,
+  theme: "auto",
 };
 
 function getConfig(): FeedbackFinConfig {
@@ -47,10 +49,18 @@ const trap = createFocusTrap(containerElement, {
 });
 
 function open(e: Event) {
+  const config = getConfig();
   document.body.appendChild(containerElement);
   containerElement.innerHTML = formHTML;
   containerElement.style.display = "block";
   containerElement.style.opacity = "1";
+
+  // Apply theme
+  if (config.theme === "light" || config.theme === "dark") {
+    containerElement.setAttribute("data-theme", config.theme);
+  } else {
+    containerElement.removeAttribute("data-theme");
+  }
 
   const target = (e?.target as HTMLElement) || document.body;
   computePosition(target, containerElement, {

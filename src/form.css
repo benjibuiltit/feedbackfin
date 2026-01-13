@@ -65,6 +65,24 @@
     0 0 0 2px var(--feedbackfin-bg-color),
     0 0 0 4px var(--feedbackfin-focus-color);
 }
+#feedbackfin__container[data-theme="light"] {
+  --feedbackfin-bg-color: #fff;
+  --feedbackfin-text-color: 240, 100%, 10%;
+  --feedbackfin-shadow:
+    rgba(7, 0, 20, 0.06) 0px 0px 0px 1px,
+    rgba(7, 0, 20, 0.1) 0px 10px 15px -3px, rgba(7, 0, 20, 0.05) 0px 4px 6px,
+    rgba(7, 0, 20, 0.05) 0px 30px 40px;
+
+  --feedbackfin-button-opacity: 0.04;
+  --feedbackfin-button-opacity-hover: 0.08;
+  --feedbackfin-button-opacity-active: 0.12;
+  --feedbackfin-icon-button-opacity: 0.38;
+
+  --feedbackfin-outline-opacity: 0.12;
+  --feedbackfin-focus-shadow:
+    0 0 0 2px var(--feedbackfin-bg-color),
+    0 0 0 4px var(--feedbackfin-focus-color);
+}
 
 #feedbackfin__container {
   position: fixed;
