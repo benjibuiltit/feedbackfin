@@ -50,6 +50,7 @@ function open(e: Event) {
   document.body.appendChild(containerElement);
   containerElement.innerHTML = formHTML;
   containerElement.style.display = "block";
+  containerElement.style.opacity = "1";
 
   const target = (e?.target as HTMLElement) || document.body;
   computePosition(target, containerElement, {
@@ -70,7 +71,7 @@ function open(e: Event) {
     .addEventListener("click", close);
 
   Array.from(
-    containerElement.getElementsByClassName("feedbackfin__radio")
+    containerElement.getElementsByClassName("feedbackfin__radio"),
   ).forEach((el) => {
     el.addEventListener("change", changeType);
   });
@@ -141,7 +142,7 @@ function captureScreenshot() {
     onclone: (clonedDoc) => {
       // Hide the widget in the cloned DOM only (no visible flash)
       const clonedContainer = clonedDoc.getElementById(
-        "feedbackfin__container"
+        "feedbackfin__container",
       );
       if (clonedContainer) {
         clonedContainer.style.display = "none";
@@ -152,7 +153,7 @@ function captureScreenshot() {
       screenshotData = canvas.toDataURL("image/png");
 
       const imgElement = document.getElementById(
-        "feedbackfin__screenshot-img"
+        "feedbackfin__screenshot-img",
       ) as HTMLImageElement;
       imgElement.src = screenshotData;
 
@@ -171,7 +172,7 @@ function removeScreenshot() {
   containerElement.removeAttribute("data-has-screenshot");
 
   const imgElement = document.getElementById(
-    "feedbackfin__screenshot-img"
+    "feedbackfin__screenshot-img",
   ) as HTMLImageElement;
   imgElement.src = "";
 }
@@ -182,7 +183,7 @@ function viewScreenshot() {
   const newWindow = window.open("");
   if (newWindow) {
     newWindow.document.write(
-      `<html><head><title>Screenshot</title></head><body style="margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#1a1a1a;"><img src="${screenshotData}" style="max-width:100%;max-height:100vh;"/></body></html>`
+      `<html><head><title>Screenshot</title></head><body style="margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#1a1a1a;"><img src="${screenshotData}" style="max-width:100%;max-height:100vh;"/></body></html>`,
     );
   }
 }
@@ -224,6 +225,10 @@ function submit(e: Event) {
   })
     .then(() => {
       containerElement.setAttribute("data-success", "");
+      setTimeout(() => {
+        containerElement.style.opacity = "0";
+        setTimeout(close, 500);
+      }, 2000);
     })
     .catch((e) => {
       console.error("Feedback Fin:", e);

@@ -1,7 +1,8 @@
 :root {
   --feedbackfin-bg-color: #fff;
   --feedbackfin-text-color: 240, 100%, 10%;
-  --feedbackfin-shadow: rgba(7, 0, 20, 0.06) 0px 0px 0px 1px,
+  --feedbackfin-shadow:
+    rgba(7, 0, 20, 0.06) 0px 0px 0px 1px,
     rgba(7, 0, 20, 0.1) 0px 10px 15px -3px, rgba(7, 0, 20, 0.05) 0px 4px 6px,
     rgba(7, 0, 20, 0.05) 0px 30px 40px;
   --feedbackfin-border-radius: 1rem;
@@ -12,8 +13,9 @@
   --feedbackfin-button-opacity: 0.04;
   --feedbackfin-button-opacity-hover: 0.08;
   --feedbackfin-button-opacity-active: 0.12;
-  --feedbackfin-button-transition: background-color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  --feedbackfin-button-transition:
+    background-color 0.2s ease-in-out, opacity 0.2s ease-in-out,
+    transform 0.2s ease-in-out;
   --feedbackfin-icon-button-opacity: 0.38;
 
   --feedbackfin-primary-color: #6a35ff;
@@ -21,7 +23,8 @@
 
   --feedbackfin-outline-opacity: 0.12;
   --feedbackfin-focus-color: var(--feedbackfin-primary-color);
-  --feedbackfin-focus-shadow: 0 0 0 2px var(--feedbackfin-bg-color),
+  --feedbackfin-focus-shadow:
+    0 0 0 2px var(--feedbackfin-bg-color),
     0 0 0 4px var(--feedbackfin-focus-color);
 }
 
@@ -29,7 +32,8 @@
   :root {
     --feedbackfin-bg-color: #2d2d30;
     --feedbackfin-text-color: 240, 10%, 90%;
-    --feedbackfin-shadow: rgba(0, 0, 5, 0.24) 0px 0px 0px 1px,
+    --feedbackfin-shadow:
+      rgba(0, 0, 5, 0.24) 0px 0px 0px 1px,
       rgba(0, 0, 5, 0.4) 0px 10px 15px -3px, rgba(0, 0, 5, 0.2) 0px 4px 6px,
       rgba(0, 0, 5, 0.2) 0px 30px 40px;
 
@@ -39,16 +43,17 @@
     --feedbackfin-icon-button-opacity: 0.5;
 
     --feedbackfin-outline-opacity: 0.2;
-    --feedbackfin-focus-shadow: 0 0 0 2px var(--feedbackfin-bg-color),
+    --feedbackfin-focus-shadow:
+      0 0 0 2px var(--feedbackfin-bg-color),
       0 0 0 4px var(--feedbackfin-focus-color);
   }
 }
 [data-theme*="dark"] {
   --feedbackfin-bg-color: #2d2d30;
   --feedbackfin-text-color: 240, 10%, 90%;
-  --feedbackfin-shadow: rgba(0, 0, 5, 0.24) 0px 0px 0px 1px,
-    rgba(0, 0, 5, 0.4) 0px 10px 15px -3px, rgba(0, 0, 5, 0.2) 0px 4px 6px,
-    rgba(0, 0, 5, 0.2) 0px 30px 40px;
+  --feedbackfin-shadow:
+    rgba(0, 0, 5, 0.24) 0px 0px 0px 1px, rgba(0, 0, 5, 0.4) 0px 10px 15px -3px,
+    rgba(0, 0, 5, 0.2) 0px 4px 6px, rgba(0, 0, 5, 0.2) 0px 30px 40px;
 
   --feedbackfin-button-opacity: 0.08;
   --feedbackfin-button-opacity-hover: 0.12;
@@ -56,7 +61,8 @@
   --feedbackfin-icon-button-opacity: 0.5;
 
   --feedbackfin-outline-opacity: 0.2;
-  --feedbackfin-focus-shadow: 0 0 0 2px var(--feedbackfin-bg-color),
+  --feedbackfin-focus-shadow:
+    0 0 0 2px var(--feedbackfin-bg-color),
     0 0 0 4px var(--feedbackfin-focus-color);
 }
 
@@ -78,6 +84,8 @@
   font-family: inherit;
   font-size: 1rem;
   color: hsl(var(--feedbackfin-text-color));
+
+  transition: opacity 0.5s ease;
 }
 
 #feedbackfin__container * {
@@ -430,14 +438,18 @@
   border-radius: 50%;
   color: #fff;
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
 }
 #feedbackfin__screenshot-remove:hover {
   background-color: #c62828;
   transform: scale(1.1);
 }
 #feedbackfin__screenshot-remove:focus-visible {
-  box-shadow: 0 0 0 2px var(--feedbackfin-bg-color), 0 0 0 4px #e53935;
+  box-shadow:
+    0 0 0 2px var(--feedbackfin-bg-color),
+    0 0 0 4px #e53935;
 }
 
 #feedbackfin__success {
