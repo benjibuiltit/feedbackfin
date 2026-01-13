@@ -1,8 +1,11 @@
 import { computePosition, flip, shift } from "@floating-ui/dom";
 import { createFocusTrap } from "focus-trap";
+import html2canvas from "html2canvas";
 
 import { formHTML } from "./form-html";
 import formCSS from "./form.css";
+
+let screenshotData: string | null = null;
 
 export type FeedbackFinConfig = {
   url: string;
@@ -70,6 +73,14 @@ function open(e: Event) {
   document
     .getElementById("feedbackfin__form")!
     .addEventListener("submit", submit);
+
+  document
+    .getElementById("feedbackfin__screenshot-btn")!
+    .addEventListener("click", captureScreenshot);
+
+  document
+    .getElementById("feedbackfin__screenshot-remove")!
+    .addEventListener("click", removeScreenshot);
 }
 
 function close() {
@@ -80,6 +91,8 @@ function close() {
   containerElement.remove();
   containerElement.removeAttribute("data-feedback-type");
   containerElement.removeAttribute("data-success");
+  containerElement.removeAttribute("data-has-screenshot");
+  screenshotData = null;
 }
 
 function changeType(e: Event) {
@@ -88,12 +101,53 @@ function changeType(e: Event) {
   containerElement.setAttribute("data-feedback-type", value);
 
   let placeholder = "I think…";
-  if (value === "issue") placeholder = "I’m having an issue with…";
-  else if (value === "idea") placeholder = "I’d like to see…";
+  if (value === "issue") placeholder = "I'm having an issue with…";
+  else if (value === "idea") placeholder = "I'd like to see…";
 
   document
     .getElementById("feedbackfin__message")
     ?.setAttribute("placeholder", placeholder);
+}
+
+async function captureScreenshot() {
+  const screenshotBtn = document.getElementById("feedbackfin__screenshot-btn")!;
+  screenshotBtn.setAttribute("disabled", "");
+
+  // Hide the widget temporarily
+  containerElement.style.display = "none";
+
+  try {
+    const canvas = await html2canvas(document.body, {
+      logging: false,
+      useCORS: true,
+      allowTaint: true,
+    });
+
+    screenshotData = canvas.toDataURL("image/png");
+
+    const imgElement = document.getElementById(
+      "feedbackfin__screenshot-img"
+    ) as HTMLImageElement;
+    imgElement.src = screenshotData;
+
+    containerElement.setAttribute("data-has-screenshot", "");
+  } catch (error) {
+    console.error("Feedback Fin: Failed to capture screenshot", error);
+  } finally {
+    // Show the widget again
+    containerElement.style.display = "block";
+    screenshotBtn.removeAttribute("disabled");
+  }
+}
+
+function removeScreenshot() {
+  screenshotData = null;
+  containerElement.removeAttribute("data-has-screenshot");
+
+  const imgElement = document.getElementById(
+    "feedbackfin__screenshot-img"
+  ) as HTMLImageElement;
+  imgElement.src = "";
 }
 
 function submit(e: Event) {
@@ -114,12 +168,16 @@ function submit(e: Event) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const data = {
+  const data: Record<string, any> = {
     ...config.user,
     feedbackType: (target.elements as any).feedbackType.value,
     message: (target.elements as any).message.value,
     timestamp: Date.now(),
   };
+
+  if (screenshotData) {
+    data.screenshot = screenshotData;
+  }
 
   fetch(config.url, {
     method: "POST",
@@ -138,7 +196,16 @@ function submit(e: Event) {
   return false;
 }
 
-const feedbackfin = { init, open, changeType, close, submit, config };
+const feedbackfin = {
+  init,
+  open,
+  changeType,
+  close,
+  submit,
+  captureScreenshot,
+  removeScreenshot,
+  config,
+};
 (window as any).feedbackfin = feedbackfin;
 
 export default feedbackfin;

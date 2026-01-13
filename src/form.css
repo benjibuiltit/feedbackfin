@@ -65,7 +65,8 @@
   z-index: 9999;
 
   width: 19rem;
-  height: 15rem;
+  min-height: 15rem;
+  height: auto;
   box-sizing: border-box;
 
   background-color: var(--feedbackfin-bg-color);
@@ -316,6 +317,110 @@
 }
 #feedbackfin__submit[disabled]::before {
   content: none;
+}
+
+#feedbackfin__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+#feedbackfin__actions #feedbackfin__submit {
+  flex: 1;
+}
+
+#feedbackfin__screenshot-btn {
+  position: relative;
+  width: 2.5rem;
+  height: 2rem;
+  border-radius: calc(var(--feedbackfin-border-radius) / 2);
+  background-color: hsla(
+    var(--feedbackfin-text-color),
+    var(--feedbackfin-button-opacity)
+  );
+  opacity: 1;
+  flex-shrink: 0;
+}
+#feedbackfin__screenshot-btn:hover,
+#feedbackfin__screenshot-btn:focus-visible {
+  background-color: hsla(
+    var(--feedbackfin-text-color),
+    var(--feedbackfin-button-opacity-hover)
+  );
+}
+#feedbackfin__screenshot-btn:active {
+  background-color: hsla(
+    var(--feedbackfin-text-color),
+    var(--feedbackfin-button-opacity-active)
+  );
+  transform: scale(0.95);
+}
+
+#feedbackfin__screenshot-badge {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  width: 1rem;
+  height: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--feedbackfin-primary-color);
+  color: var(--feedbackfin-primary-color-text);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+#feedbackfin__container[data-has-screenshot] #feedbackfin__screenshot-badge {
+  display: none;
+}
+
+#feedbackfin__container[data-has-screenshot] #feedbackfin__screenshot-btn svg {
+  color: var(--feedbackfin-primary-color);
+}
+
+#feedbackfin__screenshot-preview {
+  display: none;
+  position: relative;
+  border-radius: calc(var(--feedbackfin-border-radius) / 2);
+  overflow: hidden;
+  background-color: hsla(
+    var(--feedbackfin-text-color),
+    var(--feedbackfin-button-opacity)
+  );
+}
+
+#feedbackfin__container[data-has-screenshot] #feedbackfin__screenshot-preview {
+  display: block;
+}
+
+#feedbackfin__screenshot-img {
+  display: block;
+  width: 100%;
+  height: 4rem;
+  object-fit: cover;
+  object-position: top left;
+}
+
+#feedbackfin__screenshot-remove {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.875rem;
+
+  background-color: hsla(0, 0%, 0%, 0.6);
+  color: #fff;
+  opacity: 1;
+}
+#feedbackfin__screenshot-remove:hover,
+#feedbackfin__screenshot-remove:focus-visible {
+  background-color: hsla(0, 0%, 0%, 0.8);
 }
 
 #feedbackfin__success {

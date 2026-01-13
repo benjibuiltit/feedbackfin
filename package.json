@@ -29,6 +29,7 @@
     "@floating-ui/dom": "^0.4.2",
     "focus-trap": "^6.7.3",
     "html-minifier": "^4.0.0",
+    "html2canvas": "^1.4.1",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "microbundle": "^0.14.2",
