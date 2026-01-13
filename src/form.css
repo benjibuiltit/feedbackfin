@@ -188,6 +188,7 @@
   font-weight: var(--feedbackfin-title-weight);
   text-align: center;
   line-height: normal;
+  color: hsl(var(--feedbackfin-text-color));
 }
 
 #feedbackfin__radio-group {
@@ -340,6 +341,7 @@
   );
   opacity: 1;
   flex-shrink: 0;
+  overflow: visible;
 }
 #feedbackfin__screenshot-btn:hover,
 #feedbackfin__screenshot-btn:focus-visible {
@@ -358,8 +360,8 @@
 
 #feedbackfin__screenshot-badge {
   position: absolute;
-  top: -0.25rem;
-  right: -0.25rem;
+  top: -0.35rem;
+  right: -0.35rem;
   width: 1rem;
   height: 1rem;
 
@@ -375,52 +377,67 @@
   line-height: 1;
 }
 
-#feedbackfin__container[data-has-screenshot] #feedbackfin__screenshot-badge {
+#feedbackfin__container[data-has-screenshot] #feedbackfin__screenshot-btn {
   display: none;
-}
-
-#feedbackfin__container[data-has-screenshot] #feedbackfin__screenshot-btn svg {
-  color: var(--feedbackfin-primary-color);
 }
 
 #feedbackfin__screenshot-preview {
   display: none;
   position: relative;
-  border-radius: calc(var(--feedbackfin-border-radius) / 2);
-  overflow: hidden;
-  background-color: hsla(
-    var(--feedbackfin-text-color),
-    var(--feedbackfin-button-opacity)
-  );
+  width: 2.5rem;
+  height: 2rem;
+  flex-shrink: 0;
 }
 
 #feedbackfin__container[data-has-screenshot] #feedbackfin__screenshot-preview {
   display: block;
 }
 
+#feedbackfin__screenshot-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: calc(var(--feedbackfin-border-radius) / 2);
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+}
+
 #feedbackfin__screenshot-img {
   display: block;
   width: 100%;
-  height: 4rem;
+  height: 100%;
   object-fit: cover;
   object-position: top left;
 }
 
 #feedbackfin__screenshot-remove {
   position: absolute;
-  top: 0.25rem;
-  right: 0.25rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  font-size: 0.875rem;
+  top: -0.35rem;
+  right: -0.35rem;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
 
-  background-color: hsla(0, 0%, 0%, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #e53935;
+  border: none;
+  border-radius: 50%;
   color: #fff;
-  opacity: 1;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
 }
-#feedbackfin__screenshot-remove:hover,
+#feedbackfin__screenshot-remove:hover {
+  background-color: #c62828;
+  transform: scale(1.1);
+}
 #feedbackfin__screenshot-remove:focus-visible {
-  background-color: hsla(0, 0%, 0%, 0.8);
+  box-shadow: 0 0 0 2px var(--feedbackfin-bg-color), 0 0 0 4px #e53935;
 }
 
 #feedbackfin__success {

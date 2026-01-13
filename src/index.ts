@@ -12,13 +12,18 @@ export type FeedbackFinConfig = {
   user: Record<any, any>;
   disableErrorAlert: boolean;
 };
-const config: FeedbackFinConfig = {
+const defaultConfig: FeedbackFinConfig = {
   url: "",
   user: {},
   disableErrorAlert: false,
-  // Spread user config when loaded
-  ...(window as any).feedbackfin?.config,
 };
+
+function getConfig(): FeedbackFinConfig {
+  return {
+    ...defaultConfig,
+    ...(window as any).feedbackfin?.config,
+  };
+}
 
 function init() {
   const styleElement = document.createElement("style");
@@ -81,10 +86,26 @@ function open(e: Event) {
   document
     .getElementById("feedbackfin__screenshot-remove")!
     .addEventListener("click", removeScreenshot);
+
+  document
+    .getElementById("feedbackfin__screenshot-link")!
+    .addEventListener("click", viewScreenshot);
+
+  document.addEventListener("click", handleOutsideClick);
+}
+
+function handleOutsideClick(e: MouseEvent) {
+  if (
+    containerElement.hasAttribute("data-success") &&
+    !containerElement.contains(e.target as Node)
+  ) {
+    close();
+  }
 }
 
 function close() {
   trap.deactivate();
+  document.removeEventListener("click", handleOutsideClick);
 
   containerElement.innerHTML = "";
 
@@ -109,35 +130,40 @@ function changeType(e: Event) {
     ?.setAttribute("placeholder", placeholder);
 }
 
-async function captureScreenshot() {
+function captureScreenshot() {
   const screenshotBtn = document.getElementById("feedbackfin__screenshot-btn")!;
   screenshotBtn.setAttribute("disabled", "");
 
-  // Hide the widget temporarily
-  containerElement.style.display = "none";
+  html2canvas(document.body, {
+    logging: false,
+    useCORS: true,
+    allowTaint: true,
+    onclone: (clonedDoc) => {
+      // Hide the widget in the cloned DOM only (no visible flash)
+      const clonedContainer = clonedDoc.getElementById(
+        "feedbackfin__container"
+      );
+      if (clonedContainer) {
+        clonedContainer.style.display = "none";
+      }
+    },
+  })
+    .then((canvas) => {
+      screenshotData = canvas.toDataURL("image/png");
 
-  try {
-    const canvas = await html2canvas(document.body, {
-      logging: false,
-      useCORS: true,
-      allowTaint: true,
+      const imgElement = document.getElementById(
+        "feedbackfin__screenshot-img"
+      ) as HTMLImageElement;
+      imgElement.src = screenshotData;
+
+      containerElement.setAttribute("data-has-screenshot", "");
+    })
+    .catch((error) => {
+      console.error("Feedback Fin: Failed to capture screenshot", error);
+    })
+    .then(() => {
+      screenshotBtn.removeAttribute("disabled");
     });
-
-    screenshotData = canvas.toDataURL("image/png");
-
-    const imgElement = document.getElementById(
-      "feedbackfin__screenshot-img"
-    ) as HTMLImageElement;
-    imgElement.src = screenshotData;
-
-    containerElement.setAttribute("data-has-screenshot", "");
-  } catch (error) {
-    console.error("Feedback Fin: Failed to capture screenshot", error);
-  } finally {
-    // Show the widget again
-    containerElement.style.display = "block";
-    screenshotBtn.removeAttribute("disabled");
-  }
 }
 
 function removeScreenshot() {
@@ -150,9 +176,21 @@ function removeScreenshot() {
   imgElement.src = "";
 }
 
+function viewScreenshot() {
+  if (!screenshotData) return;
+
+  const newWindow = window.open("");
+  if (newWindow) {
+    newWindow.document.write(
+      `<html><head><title>Screenshot</title></head><body style="margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#1a1a1a;"><img src="${screenshotData}" style="max-width:100%;max-height:100vh;"/></body></html>`
+    );
+  }
+}
+
 function submit(e: Event) {
   e.preventDefault();
   const target = e.target as HTMLFormElement;
+  const config = getConfig();
 
   if (!config.url) {
     console.error("Feedback Fin: No URL provided");
@@ -204,7 +242,8 @@ const feedbackfin = {
   submit,
   captureScreenshot,
   removeScreenshot,
-  config,
+  viewScreenshot,
+  config: defaultConfig,
 };
 (window as any).feedbackfin = feedbackfin;
 

@@ -85,31 +85,36 @@
       aria-label="Message"
     ></textarea>
 
-    <div id="feedbackfin__screenshot-preview">
-      <img id="feedbackfin__screenshot-img" alt="Screenshot preview" />
-      <button
-        id="feedbackfin__screenshot-remove"
-        class="feedbackfin__icon-button"
-        type="button"
-        aria-label="Remove screenshot"
-      >
-        <svg
-          width="1em"
-          height="1em"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-
     <div id="feedbackfin__actions">
+      <div id="feedbackfin__screenshot-preview">
+        <button
+          id="feedbackfin__screenshot-link"
+          type="button"
+          aria-label="View screenshot"
+        >
+          <img id="feedbackfin__screenshot-img" alt="Screenshot preview" />
+        </button>
+        <button
+          id="feedbackfin__screenshot-remove"
+          type="button"
+          aria-label="Remove screenshot"
+        >
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
       <button
         id="feedbackfin__screenshot-btn"
         class="feedbackfin__icon-button"
@@ -158,10 +163,4 @@
   </svg>
 
   Thanks for your feedback!
-</div>
-
-<div id="feedbackfin__branding">
-  <a href="https://www.rowy.io/feedbackfin" target="_blank" rel="noopener">
-    Powered by Rowy
-  </a>
 </div>
